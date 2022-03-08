@@ -112,7 +112,40 @@ module.exports.read_one_user = function(req, res){
 }
 
 module.exports.update_user = function(req, res){
-  
+      if(!req.params.userid){
+          sendJSONresponse(res, 404, {"message":"Not found, user id is required"})
+          return
+      }
+      User
+       .findById(req.params.userid)
+       .exec(function(err, user){
+           if(err){
+               sendJSONresponse(res, 404, err)
+               return
+           }else if(!user){
+               sendJSONresponse(res, 404, {"message":"userid not found"})
+               return
+           }else{
+               user.name = req.body.name
+               user.email = req.body.email
+               user.userrole = req.body.userrole
+               user.setPassword(req.body.password)
+               user.imagename = req.body.imagename
+           }
+         user.save(function(err, user){
+            var token
+             if(err){
+                 sendJSONresponse(res, 404, err)
+             }else{
+                console.log("user updated successfully")
+                token = user.generateJwt()
+                sendJSONresponse(res, 200,{
+                    "token": token
+                })
+             }
+         })
+
+       })
 }
 
 module.exports.delete_user = function(req, res){
