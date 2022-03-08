@@ -18,7 +18,8 @@ var userSchema = new mongoose.Schema({
        required: true
     },
     imagename:{
-      type: String
+      type: String,
+      default: "anonymous.jpg"
     },
     hash: String,
     salt: String
