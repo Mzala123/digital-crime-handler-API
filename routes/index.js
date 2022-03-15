@@ -3,7 +3,11 @@ var router = express.Router();
 
 /* GET home page. */
 
+router.get('/', function(req, res, next) {
+    res.send('respond with a resource');
+  });
 
+  
 var ctrlAuth = require('../app_api/controller/authentication')
 var ctrlPoliceOfficer = require('../app_api/controller/police_officer')
 var ctrlStationOfficer = require('../app_api/controller/station_officer')
@@ -17,6 +21,8 @@ router.get('/read_one_user/:userid', ctrlAuth.read_one_user)
 router.put('/update_user/:userid', ctrlAuth.update_user)
 router.put('/update_userrole/:userid',ctrlAuth.update_userrole)
 router.put('/update_admin_name_and_email/:userid', ctrlAuth.update_admin_name_and_email)
+router.put('/update_user_password/:userid',ctrlAuth.update_user_password)
+
 router.delete('/delete_user/:userid',ctrlAuth.delete_user )
 router.post('/upload_user_imagefile', ctrlAuth.upload_user_imagefile)
 
