@@ -32,8 +32,8 @@ module.exports.register_user = function(req, res){
             sendJSONresponse(res, 400, err)
         }else{
             token = user.generateJwt()
-            sendJSONresponse(res, 200,{
-                "token": token
+            sendJSONresponse(res, 201,{
+                "token": token, "user":user
             })
         }
     })
@@ -55,8 +55,8 @@ module.exports.login = function(req, res){
         }
         if(user){
             token = user.generateJwt()
-            sendJSONresponse(res, 200,{
-                "token":token
+            sendJSONresponse(res, 201,{
+                "token":token, "user":user
             })
         }else{
             sendJSONresponse(res, 401, info)
@@ -78,7 +78,7 @@ module.exports.upload_user_imagefile = function(req, res){
 
 module.exports.get_list_of_users = function(req, res){
       User
-       .find({})
+       .find({"userrole": {$ne:"Admin"}})
        .exec(function(err, user){
            if(err){
              sendJSONresponse(res, 404, err)
@@ -146,6 +146,95 @@ module.exports.update_user = function(req, res){
          })
 
        })
+}
+
+
+module.exports.update_userrole = function(req, res){
+    if(!req.params.userid){
+        sendJSONresponse(res, 404, {"message":"Not found, user id is required"})
+        return
+    }
+    User
+     .findById(req.params.userid)
+     .exec(function(err, user){
+         if(err){
+             sendJSONresponse(res, 404, err)
+             return
+         }else if(!user){
+             sendJSONresponse(res, 404, {"message":"userid not found"})
+             return
+         }else{
+             user.userrole = req.body.userrole
+         }
+       user.save(function(err, user){
+           if(err){
+               sendJSONresponse(res, 404, err)
+           }else{
+              sendJSONresponse(res, 200, user)
+           }
+       })
+
+     })
+}
+
+
+module.exports.update_user_password = function(req, res){
+    if(!req.params.userid){
+        sendJSONresponse(res, 404, {"message":"Not found, user id is required"})
+        return
+    }
+    User
+     .findById(req.params.userid)
+     .exec(function(err, user){
+         if(err){
+             sendJSONresponse(res, 404, err)
+             return
+         }else if(!user){
+             sendJSONresponse(res, 404, {"message":"userid not found"})
+             return
+         }else{
+            user.setPassword(req.body.password)
+         }
+       user.save(function(err, user){
+           if(err){
+               sendJSONresponse(res, 404, err)
+           }else{
+              sendJSONresponse(res, 200, user)
+           }
+       })
+
+     })
+}
+
+module.exports.update_admin_name_and_email = function(req, res){
+    
+    if(!req.params.userid){
+        sendJSONresponse(res, 404, {"message":"Not found, user id is required"})
+        return
+    }
+    User
+     .findById(req.params.userid)
+     .exec(function(err, user){
+         if(err){
+             sendJSONresponse(res, 404, err)
+             return
+         }else if(!user){
+             sendJSONresponse(res, 404, {"message":"userid not found"})
+             return
+         }else{
+            user.name = req.body.name
+            user.email = req.body.email
+            user.imagename = req.body.imagename
+         }
+       user.save(function(err, user){
+           if(err){
+               sendJSONresponse(res, 404, err)
+           }else{
+              sendJSONresponse(res, 200, user)
+           }
+       })
+
+     })
 }
 
 module.exports.delete_user = function(req, res){
