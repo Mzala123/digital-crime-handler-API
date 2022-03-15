@@ -3,16 +3,14 @@ var router = express.Router();
 
 /* GET home page. */
 
-router.get('/', function(req, res, next) {
-    res.send('respond with a resource');
-  });
 
-  
 var ctrlAuth = require('../app_api/controller/authentication')
 var ctrlPoliceOfficer = require('../app_api/controller/police_officer')
 var ctrlStationOfficer = require('../app_api/controller/station_officer')
 
 // registering users and login end points
+router.get('/', ctrlAuth.checking)
+
 router.post('/register', ctrlAuth.register_user)
 router.post('/login', ctrlAuth.login)
 
