@@ -9,7 +9,6 @@ var ctrlPoliceOfficer = require('../app_api/controller/police_officer')
 var ctrlStationOfficer = require('../app_api/controller/station_officer')
 
 // registering users and login end points
-router.get('/', ctrlAuth.checking)
 
 router.post('/register', ctrlAuth.register_user)
 router.post('/login', ctrlAuth.login)
@@ -23,6 +22,14 @@ router.put('/update_user_password/:userid',ctrlAuth.update_user_password)
 
 router.delete('/delete_user/:userid',ctrlAuth.delete_user )
 router.post('/upload_user_imagefile', ctrlAuth.upload_user_imagefile)
+
+// creating person and adding criminal records
+
+router.post('/add_person_suspect', ctrlPoliceOfficer.add_person_suspect)
+router.get('/get_list_of_person_suspects', ctrlPoliceOfficer.get_list_of_person_suspects)
+router.get('/read_one_person_suspect/:suspectId', ctrlPoliceOfficer.read_one_person_suspect)
+router.put('/update_person_suspect/:suspectId', ctrlPoliceOfficer.update_person_suspect)
+router.delete('/delete_person_suspect/:suspectId', ctrlPoliceOfficer.delete_person_suspect)
 
 
 

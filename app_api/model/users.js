@@ -19,7 +19,7 @@ var userSchema = new mongoose.Schema({
     },
     imagename:{
       type: String,
-      default: "anonymous.jpg"
+      'default': 'null_profile.png'
     },
     hash: String,
     salt: String

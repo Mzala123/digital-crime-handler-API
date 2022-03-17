@@ -42,3 +42,5 @@ process.on('SIGINT', function(){
 });
 
 require('./users')
+require('./suspect')
+require('./crime')
