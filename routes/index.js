@@ -7,6 +7,7 @@ var router = express.Router();
 var ctrlAuth = require('../app_api/controller/authentication')
 var ctrlPoliceOfficer = require('../app_api/controller/police_officer')
 var ctrlStationOfficer = require('../app_api/controller/station_officer')
+var ctrlImage = require('../app_api/controller/image')
 
 // registering users and login end points
 
@@ -31,6 +32,10 @@ router.get('/read_one_person_suspect/:suspectId', ctrlPoliceOfficer.read_one_per
 router.put('/update_person_suspect/:suspectId', ctrlPoliceOfficer.update_person_suspect)
 router.delete('/delete_person_suspect/:suspectId', ctrlPoliceOfficer.delete_person_suspect)
 
+
+// upload image to database API
+router.post('/upload_user_profile', ctrlImage.upload_user_profile)
+router.get('/get_user_profile_image/:imageId', ctrlImage.get_user_profile_image)
 
 
 module.exports = router;
