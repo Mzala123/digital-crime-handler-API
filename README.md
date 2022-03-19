@@ -10,3 +10,5 @@ Open Git Bash or Windows shell
 
 Run npm install 
 
+
+You good to go
