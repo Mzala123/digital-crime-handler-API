@@ -33,12 +33,12 @@ module.exports.upload_user_profile = function(req, res){
                 data: fs.readFileSync("./public/images/"+req.files.file.name)
             }
             }
-            Image.create(obj, (err, item)=>{
+            Image.create(obj, (err, image)=>{
                 if(err){
                     sendJSONresponse(res, 404, err)
                 }else{
-                    item.save()
-                    sendJSONresponse(res, 201, item)
+                    image.save()
+                    sendJSONresponse(res, 201, image)
                 }
             })
         }
