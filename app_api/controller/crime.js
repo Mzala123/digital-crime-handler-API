@@ -11,7 +11,25 @@ var sendJSONresponse = function(res, status, content){
 
 
 module.exports.crimesCreate = function(req, res){
-     
+     var suspectId = req.params.suspectId
+    // getRegisteringOfficer(req, res, function(req, res, username){
+         if(suspectId){
+             Suspect
+               .findById(suspectId)
+               .select('crimes')
+               .exec(
+                   function(err, suspect){
+                       if(err){
+                           sendJSONresponse(res, 404, err)
+                       }else{
+                           addCrime(req, res, suspect)
+                       }
+                   }
+               )
+         }else{
+             sendJSONresponse(res, 404, {"message":"Not found suspect required"})
+         }
+    // })
 }
 
 var getRegisteringOfficer = function(req, res, callback){
@@ -20,7 +38,7 @@ var getRegisteringOfficer = function(req, res, callback){
            .findOne({email : req.payload.email})
            .exec(function(err, user){
                if(!user){
-                   sendJSONresponse(res, 404, {"message":"user not found"})
+                   sendJSONresponse(res, 404, {"message":"user not found okay"})
                    return
                }else if(err){
                    console.log(err)
@@ -30,11 +48,12 @@ var getRegisteringOfficer = function(req, res, callback){
                callback(req, res, user.name)
            })
      }else{
-         sendJSONresponse(res, 404, {"message":"user not found"})
+         sendJSONresponse(res, 404, {"message":"user not found munena"})
      }
-}
+} 
 
-var addCrime = function(req, res, officer){
+
+var addCrime = function(req, res, suspect){
     if(!suspect){
         sendJSONresponse(res, 404, {"message":"suspect not found"})
     }else{
@@ -43,7 +62,7 @@ var addCrime = function(req, res, officer){
             counts: req.body.counts,
             offenseDate: req.body.offenseDate,
             offenseDescription: req.body.offenseDescription,
-            registeringOfficer: officer,
+            registeringOfficer: req.body.officer,
         })
         suspect.save(function(err, suspect){
             var thisCrime
