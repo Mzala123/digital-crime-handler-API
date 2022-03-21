@@ -75,3 +75,48 @@ var addCrime = function(req, res, suspect){
         })
     }
 }
+
+module.exports.crimesReadOne = function(req, res){
+    if(req.params && req.params.suspectId && req.params.crimeId){
+        Suspect
+           .findById(req.params.suspectId)
+           .select("name crimes")
+           .exec(function(err, suspect){
+               var response, crime;
+               if(!suspect){
+                   sendJSONresponse(res, 404, {"message":"suspect not found"})
+                   retun
+               }else if(err){
+                 sendJSONresponse(res, 404, err)
+               }if(suspect.crimes && suspect.crimes.length > 0){
+                   crime = suspect.crimes.id(req.params.crimeId)
+                   if(!crime){
+                       sendJSONresponse(res, 404, {"message":"individual has no crime"})
+                   }else{
+                       response = {
+                           suspect:{ 
+                               firstname: suspect.firstname,
+                               lastname: suspect.lastname,
+                               id: req.params.suspectId
+                           },
+                           crime: crime
+                       }
+
+                       sendJSONresponse(res, 200, response)
+                   }
+               }else{
+                   sendJSONresponse(res, 404, {"message":"no crime found"})
+               }
+           })
+    }else{
+        sendJSONresponse(res, 404, {"message":"not found, suspect id and crime id are both required"})
+    }
+}
+
+
+module.exports.crimesUpdateOne = function(req, res){
+
+}
+module.exports.crimesDeleteOne = function(req, res){
+
+}

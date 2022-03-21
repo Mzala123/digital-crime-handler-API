@@ -35,6 +35,9 @@ router.delete('/delete_person_suspect/:suspectId', ctrlPoliceOfficer.delete_pers
 
 // adding crime details committed by a suspect
 router.post('/add_person_suspect/:suspectId/add_crime_details', ctrlCrime.crimesCreate)
+router.get('/read_one_person_suspect/:suspectId/crimes/:crimeId', ctrlCrime.crimesReadOne)
+router.put('/read_one_person_suspect/:suspectId/crimes/:crimeId', ctrlCrime.crimesUpdateOne)
+router.delete('/read_one_person_suspect/:suspectId/crimes/:crimeId', ctrlCrime.crimesDeleteOne)
 
 // upload image to database API
 router.post('/upload_user_profile', ctrlImage.upload_user_profile)
