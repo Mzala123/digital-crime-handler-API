@@ -2,6 +2,7 @@ var mongoose = require("mongoose")
 var Image = mongoose.model("Image")
 var multer = require("multer")
 var fs = require('fs')
+const { contentType } = require("express/lib/response")
 
 
 var storage = multer.diskStorage({
@@ -30,7 +31,8 @@ module.exports.upload_user_profile = function(req, res){
             obj= {
             imagename: req.files.file.name,
             img:{
-                data: fs.readFileSync("./public/images/"+req.files.file.name)
+                data: fs.readFileSync("./public/images/"+req.files.file.name),
+                contentType: 'image/'
             }
             }
             Image.create(obj, (err, image)=>{
@@ -45,7 +47,7 @@ module.exports.upload_user_profile = function(req, res){
     })
 }
 
-module.exports.get_user_profile_image = function(req, res){
+module.exports.get_user_profile_image = async(req, res)=>{
        if(!req.params.imageId){
            sendJSONresponse(res, 404, {"message":"image id is required"})
        }

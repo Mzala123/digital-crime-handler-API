@@ -74,6 +74,7 @@ module.exports.upload_user_imagefile = function(req, res){
             sendJSONresponse(res,201,req.files.file.name)
         }
     })
+    
 }
 
 module.exports.get_list_of_users = function(req, res){

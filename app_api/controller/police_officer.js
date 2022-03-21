@@ -130,3 +130,7 @@ module.exports.delete_person_suspect = function(req, res){
         sendJSONresponse(res, 404, {"message":"suspect id is required"})
     }
 }
+
+module.exports.crimesCreate = function(req, res){
+    
+}

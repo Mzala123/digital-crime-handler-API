@@ -3,7 +3,8 @@ var mongoose = require("mongoose")
 var imageSchema = mongoose.Schema({
     imagename:{type : String, 'default':'null_profile.png'},
     img:{
-        data: Buffer
+        data: Buffer,
+        contentType: String
     } 
 })
 
