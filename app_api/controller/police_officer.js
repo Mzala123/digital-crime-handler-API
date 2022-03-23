@@ -131,6 +131,3 @@ module.exports.delete_person_suspect = function(req, res){
     }
 }
 
-module.exports.crimesCreate = function(req, res){
-    
-}
