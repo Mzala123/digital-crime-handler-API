@@ -53,6 +53,18 @@ module.exports.get_list_of_person_suspects = function(req, res){
            }
        })
 }
+module.exports.get_list_of_suspects_with_alleged_crime = function(req, res){
+                Suspect
+                .find({crimes: {$exists: true, $ne:[]}})
+                .exec(function(err, suspect){
+                    if(err){
+                    sendJSONresponse(res, 404, err)
+                    }else{
+                        console.log(suspect)
+                        sendJSONresponse(res, 200, suspect)
+                    }
+                })
+} 
 
 module.exports.read_one_person_suspect = function(req, res){
     if(!req.params.suspectId){

@@ -29,6 +29,7 @@ router.post('/upload_user_imagefile', ctrlAuth.upload_user_imagefile)
 
 router.post('/add_person_suspect', ctrlPoliceOfficer.add_person_suspect)
 router.get('/get_list_of_person_suspects', ctrlPoliceOfficer.get_list_of_person_suspects)
+router.get('/get_list_of_suspects_with_alleged_crime', ctrlPoliceOfficer.get_list_of_suspects_with_alleged_crime)
 router.get('/read_one_person_suspect/:suspectId', ctrlPoliceOfficer.read_one_person_suspect)
 router.put('/update_person_suspect/:suspectId', ctrlPoliceOfficer.update_person_suspect)
 router.delete('/delete_person_suspect/:suspectId', ctrlPoliceOfficer.delete_person_suspect)
