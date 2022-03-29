@@ -254,3 +254,24 @@ module.exports.delete_user = function(req, res){
           sendJSONresponse(res, 404, {"message":"userid"})
       }
 }
+
+module.exports.read_users_count_by_userrole = function(req, res){
+         User
+           .aggregate([
+               {$unwind: '$userrole'},
+               {
+                   $group: {
+                       _id: '$userrole',
+                       userroleCount: {$count: {}}
+                   }
+               },
+               {$sort: {'userroleCount': 1}}
+           ])
+           .exec(function(err, user){
+               if(err){
+                  sendJSONresponse(res, 404, err)
+               }else{
+                  sendJSONresponse(res, 200, user)
+               }
+           })   
+} 

@@ -15,6 +15,7 @@ var ctrlImage = require('../app_api/controller/image')
 router.post('/register', ctrlAuth.register_user)
 router.post('/login', ctrlAuth.login)
 
+
 router.get('/users', ctrlAuth.get_list_of_users)
 router.get('/read_one_user/:userid', ctrlAuth.read_one_user)
 router.put('/update_user/:userid', ctrlAuth.update_user)
@@ -24,6 +25,10 @@ router.put('/update_user_password/:userid',ctrlAuth.update_user_password)
 
 router.delete('/delete_user/:userid',ctrlAuth.delete_user )
 router.post('/upload_user_imagefile', ctrlAuth.upload_user_imagefile)
+
+//user section dashboard queries
+router.get('/read_users_count_by_userrole', ctrlAuth.read_users_count_by_userrole)
+
 
 // creating person and adding criminal records
 
@@ -39,6 +44,11 @@ router.post('/add_person_suspect/:suspectId/add_crime_details', ctrlCrime.crimes
 router.get('/read_one_person_suspect/:suspectId/crimes/:crimeId', ctrlCrime.crimesReadOne)
 router.put('/read_one_person_suspect/:suspectId/crimes/:crimeId', ctrlCrime.crimesUpdateOne)
 router.delete('/read_one_person_suspect/:suspectId/crimes/:crimeId', ctrlCrime.crimesDeleteOne)
+
+// station officer end points
+//router.post('/', ctrlStationOfficer);
+
+// end of station officer APIs
 
 // upload image to database API
 router.post('/upload_user_profile', ctrlImage.upload_user_profile)
