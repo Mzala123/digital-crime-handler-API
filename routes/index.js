@@ -10,6 +10,8 @@ var ctrlStationOfficer = require('../app_api/controller/station_officer')
 var ctrlCrime = require('../app_api/controller/crime')
 var ctrlImage = require('../app_api/controller/image')
 
+var ctrlMail = require('../app_api/controller/mailing');
+
 // registering users and login end points
 
 router.post('/register', ctrlAuth.register_user)
@@ -49,6 +51,10 @@ router.delete('/read_one_person_suspect/:suspectId/crimes/:crimeId', ctrlCrime.c
 //router.post('/', ctrlStationOfficer);
 
 // end of station officer APIs
+
+// send email notification API
+router.post('/send_nofification_email_to_suspect', ctrlMail.send_nofification_email_to_suspect)
+//end of email notification API
 
 // upload image to database API
 router.post('/upload_user_profile', ctrlImage.upload_user_profile)
