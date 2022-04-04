@@ -1,12 +1,24 @@
 var mongoose = require('mongoose')
 
+/*var notificationSchema = new mongoose.Schema({
+     from: {type: String, required: true},
+     to: {type: String, required: true},
+     subject: {type: String, required: true},
+     text: {type: String, required: true},
+     sentDate: {type: Date, 'default': Date.now},
+     crimeId: {type: String, required: true}
+}) */
+
 var crimeSchema = new mongoose.Schema({
      category: {type: String, required: true},
      chargeFiled: {type: String, "default": Date.now},
      counts: {type: Number, requrired: true},
      offenseDate: {type: Date, required: true},
      offenseDescription: {type: String, required: true},
-     registeringOfficer: {type: String, required: true},
+     attachments: [String],
+     status: {type: String, 'default': 'Pending'},
+     statusDescription: {type: String, 'default':'newly lodged case'},
+     registeringOfficer: {type: String, required: true}
 })
 
 var suspectSchema = new mongoose.Schema({

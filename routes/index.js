@@ -54,6 +54,7 @@ router.delete('/read_one_person_suspect/:suspectId/crimes/:crimeId', ctrlCrime.c
 
 // send email notification API
 router.post('/send_nofification_email_to_suspect', ctrlMail.send_nofification_email_to_suspect)
+router.get('/read_nofification_email_details', ctrlMail.read_nofification_email_details)
 //end of email notification API
 
 // upload image to database API
