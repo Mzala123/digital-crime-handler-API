@@ -6,7 +6,7 @@ var notificationSchema = new mongoose.Schema({
      subject: {type: String, required: true},
      text: {type: String, required: true},
      sentDate: {type: Date, 'default': Date.now},
-     crimeId: {type: String, required: true}
+     crimeId: {type: mongoose.Schema.Types.ObjectId, required: true}
 })
 
 mongoose.model('Notification', notificationSchema)

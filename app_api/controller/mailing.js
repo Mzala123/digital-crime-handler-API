@@ -1,3 +1,4 @@
+const { json } = require('express/lib/response')
 var mongoose = require('mongoose')
 var nodemailer = require('nodemailer')
 var Notification = mongoose.model('Notification')
@@ -57,25 +58,26 @@ module.exports.send_nofification_email_to_suspect = function(req, res){
 
 }
 
+
+
 module.exports.read_nofification_email_details = function(req, res){
-         
-       createCollection(
-             'crimeDetails',
-             {
-                 viewOn: 'Notification',
-                 pipeline: [
-                   {
-                       $lookup: 
-                       {
-                          from: 'Suspect',
-                          localField: 'crimes._id',
-                          foreignField: '_id',
-                          as: 'crimeData'
-                       }
-                   }
-                     
-                 ],
+       const ObjectId = mongoose.Types.ObjectId;
+       var suspectId = req.query.suspectId
+       suspectId === Suspect._id
+       console.log(suspectId);
+       Suspect
+         .aggregate(
+             [
+                 {$match: { _id: ObjectId(suspectId)}}
+             ]
+         ).exec(function(err, data){
+             if(err){
+
+             }else{
+                 sendJSONresponse(res, 200, data)
              }
-         )
+         })
+       
+
 }
 
