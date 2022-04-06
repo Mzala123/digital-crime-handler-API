@@ -46,6 +46,7 @@ router.post('/add_person_suspect/:suspectId/add_crime_details', ctrlCrime.crimes
 router.get('/read_one_person_suspect/:suspectId/crimes/:crimeId', ctrlCrime.crimesReadOne)
 router.put('/read_one_person_suspect/:suspectId/crimes/:crimeId', ctrlCrime.crimesUpdateOne)
 router.delete('/read_one_person_suspect/:suspectId/crimes/:crimeId', ctrlCrime.crimesDeleteOne)
+router.put('/update_crime_case_status_details/:suspectId/crimes/:crimeId', ctrlCrime.crimesStatusUpdate)
 
 // station officer end points
 //router.post('/', ctrlStationOfficer);

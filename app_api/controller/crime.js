@@ -156,6 +156,44 @@ module.exports.crimesUpdateOne = function(req, res){
          }
 }
 
+module.exports.crimesStatusUpdate = function(req, res){
+    if(!req.params.suspectId || !req.params.crimeId){
+        sendJSONresponse(res, 404, {"message":"not found, suspect id and crime id required"})
+        return
+    }else{
+        Suspect
+          .findById(req.params.suspectId)
+          .select('crimes')
+          .exec(function(err, suspect){
+              var thisCrime
+              if(!suspect){
+                  sendJSONresponse(res, 404, {"message":"suspect id not found"})
+                  return
+              }else if(err){
+                  sendJSONresponse(res, 404, err)
+                  return
+              }if(suspect.crimes && suspect.crimes.length > 0){
+                  thisCrime = suspect.crimes.id(req.params.crimeId)
+                  if(!thisCrime){
+                      sendJSONresponse(res, 404, {"message":"crime id not found"})
+                  }else{ 
+                   thisCrime.status = req.body.status,
+                   thisCrime.statusDescription = req.body.statusDescription,
+                   suspect.save(function(err, suspect){
+                       if(err){
+                           sendJSONresponse(res, 401, err)
+                       }else{
+                           sendJSONresponse(res, 200, thisCrime)
+                       }
+                   })
+                  }
+              }else{
+                  sendJSONresponse(res, 404, {"message":"no crime to update"})
+              }
+          })
+    }
+}
+
 module.exports.crimesDeleteOne = function(req, res){
     if(!req.params.suspectId || !req.params.crimeId){
         sendJSONresponse(res, 404, {"message":"not found, suspect id and crime id required"})
