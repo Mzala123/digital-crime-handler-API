@@ -61,12 +61,13 @@ module.exports.send_nofification_email_to_suspect = function(req, res){
 module.exports.read_nofification_email_details = function(req, res){
        const ObjectId = mongoose.Types.ObjectId;
        var suspectId = req.query.suspectId
+       var crimeId = req.query.crimeId
        suspectId === Suspect._id
        console.log(suspectId);
        Suspect
          .aggregate(
              [
-                 {$match: { _id: ObjectId(suspectId)}},
+                 {$match: { '_id': ObjectId(suspectId), 'crimes._id': ObjectId(crimeId)}},
                  {$unwind: "$crimes"},
                  {
                      $lookup: {
@@ -75,13 +76,14 @@ module.exports.read_nofification_email_details = function(req, res){
                         foreignField: "crimeId",
                         as: "crimeDocs"
                      }
-                 } 
+                 },
+                 //{$unwind: '$suspects'},
              ]
          ).exec(function(err, data){
              if(err){
 
              }else{
-                 sendJSONresponse(res, 200, data)
+                 sendJSONresponse(res, 200, data[0])
              }
          })
 }

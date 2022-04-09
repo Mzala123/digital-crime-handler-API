@@ -140,7 +140,7 @@ module.exports.crimesUpdateOne = function(req, res){
                         thisCrime.counts = req.body.counts,
                         thisCrime.offenseDate = req.body.offenseDate,
                         thisCrime.offenseDescription = req.body.offenseDescription,
-                        thisCrime.registeringOfficer = req.body.officer
+                        //thisCrime.registeringOfficer = req.body.officer
                         suspect.save(function(err, suspect){
                             if(err){
                                 sendJSONresponse(res, 401, err)
