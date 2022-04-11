@@ -30,6 +30,7 @@ router.post('/upload_user_imagefile', ctrlAuth.upload_user_imagefile)
 
 //user section dashboard queries
 router.get('/read_users_count_by_userrole', ctrlAuth.read_users_count_by_userrole)
+router.get('/read_count_all_users_in_system', ctrlAuth.read_count_all_users_in_system)
 
 
 // creating person and adding criminal records
@@ -55,7 +56,7 @@ router.put('/update_crime_case_status_details/:suspectId/crimes/:crimeId', ctrlC
 
 // send email notification API
 router.post('/send_nofification_email_to_suspect', ctrlMail.send_nofification_email_to_suspect)
-router.get('/read_nofification_email_details', ctrlMail.read_nofification_email_details)
+router.get('/read_nofification_email_details/:suspectId/crimes/:crimeId', ctrlMail.read_nofification_email_details)
 //end of email notification API
 
 // upload image to database API

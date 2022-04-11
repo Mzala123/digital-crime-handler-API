@@ -93,7 +93,7 @@ module.exports.crimesReadOne = function(req, res){
                    if(!crime){
                        sendJSONresponse(res, 404, {"message":"individual has no crime"})
                    }else{
-                     /*  response = {
+                     /*response = {
                           /* suspect:{ 
                                firstname: suspect.firstname,
                                lastname: suspect.lastname,

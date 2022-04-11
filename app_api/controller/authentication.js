@@ -4,6 +4,7 @@ var User = mongoose.model('User')
 //var fileUpload = require('express-fileupload')
 var fs = require('fs') 
 const { use } = require('passport/lib')
+const { send } = require('process')
 
 var sendJSONresponse = function(res, status, content){
     res.status(status)
@@ -259,10 +260,10 @@ module.exports.read_users_count_by_userrole = function(req, res){
          User
            .aggregate([
                {$unwind: '$userrole'},
-               {
+               { 
                    $group: {
                        _id: '$userrole',
-                       userroleCount: {$count: {}}
+                       userroleCount: {$count: {}},
                    }
                },
                {$sort: {'userroleCount': 1}}
@@ -275,3 +276,15 @@ module.exports.read_users_count_by_userrole = function(req, res){
                }
            })   
 } 
+
+module.exports.read_count_all_users_in_system = function(req, res){
+    User
+      .estimatedDocumentCount({})
+      .exec(function(err, user){
+          if(err){
+              sendJSONresponse(res, 401, err)
+          }else{
+              sendJSONresponse(res, 200, user)
+          }
+      })
+}

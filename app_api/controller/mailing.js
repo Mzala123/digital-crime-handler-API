@@ -60,8 +60,8 @@ module.exports.send_nofification_email_to_suspect = function(req, res){
 
 module.exports.read_nofification_email_details = function(req, res){
        const ObjectId = mongoose.Types.ObjectId;
-       var suspectId = req.query.suspectId
-       var crimeId = req.query.crimeId
+       var suspectId = req.params.suspectId
+       var crimeId = req.params.crimeId  
        suspectId === Suspect._id
        console.log(suspectId);
        Suspect
@@ -77,7 +77,6 @@ module.exports.read_nofification_email_details = function(req, res){
                         as: "crimeDocs"
                      }
                  },
-                 //{$unwind: '$suspects'},
              ]
          ).exec(function(err, data){
              if(err){
