@@ -228,3 +228,47 @@ module.exports.crimesDeleteOne = function(req, res){
           })
     }
 }
+
+
+
+module.exports.read_count_crime_by_category = function(req, res){
+        
+         // sendJSONresponse(res, 200, {"message":"mwafika biggy"})
+            Suspect
+              .aggregate([
+                  {$unwind: '$crimes'},
+                  
+                  {
+                      $group: {
+                        _id: "$crimes.category",
+                        categoryCount: {$count:{}}
+                  }
+                },
+               // {$sort: 'categoryCount'}
+              ]).exec(function(err, crimes){
+                  if(err){
+                      sendJSONresponse(res, 401, err)
+                  }else{
+                      sendJSONresponse(res, 200, crimes)
+                  }
+              })
+      
+}
+
+module.exports.count_all_registered_crimes = function(req, res){
+     
+    Suspect
+         .aggregate([
+             {$unwind: "$crimes"},
+             {$group: {
+               _id: 'crimes',
+               count: {$sum: 1}}} ]
+             ).exec(function(err, data){
+                 if(err){
+                     sendJSONresponse(res, 401, err)
+                 }else{
+                     sendJSONresponse(res, 200, data)
+                 }
+             })
+     
+}

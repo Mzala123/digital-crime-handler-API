@@ -285,6 +285,6 @@ module.exports.read_count_all_users_in_system = function(req, res){
               sendJSONresponse(res, 401, err)
           }else{
               sendJSONresponse(res, 200, user)
-          }
+          }   
       })
 }
