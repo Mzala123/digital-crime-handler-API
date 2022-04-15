@@ -231,20 +231,17 @@ module.exports.crimesDeleteOne = function(req, res){
 
 
 
-module.exports.read_count_crime_by_category = function(req, res){
-        
-         // sendJSONresponse(res, 200, {"message":"mwafika biggy"})
-            Suspect
+module.exports.read_count_crime_by_category = async function(req, res){
+        await Suspect
               .aggregate([
                   {$unwind: '$crimes'},
-                  
                   {
                       $group: {
                         _id: "$crimes.category",
                         categoryCount: {$count:{}}
                   }
                 },
-               // {$sort: 'categoryCount'}
+                {$sort: {'categoryCount': 1}}
               ]).exec(function(err, crimes){
                   if(err){
                       sendJSONresponse(res, 401, err)
@@ -256,7 +253,6 @@ module.exports.read_count_crime_by_category = function(req, res){
 }
 
 module.exports.count_all_registered_crimes = function(req, res){
-     
     Suspect
          .aggregate([
              {$unwind: "$crimes"},
