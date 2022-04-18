@@ -33,6 +33,7 @@ router.get('/read_users_count_by_userrole', ctrlAuth.read_users_count_by_userrol
 router.get('/read_count_all_users_in_system', ctrlAuth.read_count_all_users_in_system)
 
 
+
 // creating person and adding criminal records
 
 router.post('/add_person_suspect', ctrlPoliceOfficer.add_person_suspect)
@@ -52,6 +53,9 @@ router.put('/update_crime_case_status_details/:suspectId/crimes/:crimeId', ctrlC
 
 router.get('/read_count_crime_by_category', ctrlCrime.read_count_crime_by_category)
 router.get('/count_all_registered_crimes', ctrlCrime.count_all_registered_crimes)
+
+router.get('/read_count_all_suspects_in_system', ctrlPoliceOfficer.read_count_all_suspects_in_system)
+router.get('/read_count_suspects_by_gender', ctrlPoliceOfficer.read_count_suspects_by_gender)
 
 // station officer end points
 //router.post('/', ctrlStationOfficer);

@@ -143,3 +143,32 @@ module.exports.delete_person_suspect = function(req, res){
     }
 }
 
+module.exports.read_count_suspects_by_gender = async function(req, res){
+        Suspect
+           .aggregate([
+               {$group: {
+                   _id: '$gender',
+                   countByGender: {$count:{}}
+               }},
+               {$sort: {'countByGender': 1}}
+           ]).exec(function(err, suspectGender){
+               if(err){
+                 sendJSONresponse(res, 404, err)
+               }else{
+                   sendJSONresponse(res, 200, suspectGender)
+               }
+           })
+}
+
+module.exports.read_count_all_suspects_in_system = async function(req, res){
+      Suspect
+        .countDocuments()
+        .exec(function(err, suspects){
+            if(err){
+                sendJSONresponse(res, 404, err)
+            }else{
+                sendJSONresponse(res, 200, suspects)
+            }
+        })
+}
+
