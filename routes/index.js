@@ -36,6 +36,7 @@ router.get('/read_count_all_users_in_system', ctrlAuth.read_count_all_users_in_s
 // creating person and adding criminal records
 
 router.post('/add_person_suspect', ctrlPoliceOfficer.add_person_suspect)
+
 router.get('/get_list_of_person_suspects', ctrlPoliceOfficer.get_list_of_person_suspects)
 router.get('/get_list_of_suspects_with_alleged_crime', ctrlPoliceOfficer.get_list_of_suspects_with_alleged_crime)
 router.get('/read_one_person_suspect/:suspectId', ctrlPoliceOfficer.read_one_person_suspect)

@@ -258,8 +258,9 @@ module.exports.count_all_registered_crimes = function(req, res){
              {$unwind: "$crimes"},
              {$group: {
                _id: 'crimes',
-               count: {$sum: 1}}} ]
-             ).exec(function(err, data){
+               countCrimes: {$count:{}}}
+            }  
+            ]).exec(function(err, data){
                  if(err){
                      sendJSONresponse(res, 401, err)
                  }else{

@@ -264,7 +264,7 @@ module.exports.read_users_count_by_userrole = function(req, res){
                    $group: {
                        _id: '$userrole',
                        userroleCount: {$count: {}},
-                   }
+                 }
                },
                {$sort: {'userroleCount': 1}}
            ])
