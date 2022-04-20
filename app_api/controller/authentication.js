@@ -279,7 +279,7 @@ module.exports.read_users_count_by_userrole = function(req, res){
 
 module.exports.read_count_all_users_in_system = function(req, res){
     User
-      .estimatedDocumentCount({})
+      .countDocuments({})
       .exec(function(err, user){
           if(err){
               sendJSONresponse(res, 401, err)
