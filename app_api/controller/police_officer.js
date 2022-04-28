@@ -53,6 +53,7 @@ module.exports.get_list_of_person_suspects = function(req, res){
            }
        })
 }
+
 module.exports.get_list_of_suspects_with_alleged_crime = function(req, res){
                 Suspect
                 .find({crimes: {$exists: true, $ne:[]}})
@@ -170,5 +171,7 @@ module.exports.read_count_all_suspects_in_system = async function(req, res){
                 sendJSONresponse(res, 200, suspects)
             }
         })
+
+        //Suspect.createView()
 }
 
