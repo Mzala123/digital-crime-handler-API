@@ -295,3 +295,48 @@ module.exports.read_all_concluded_cases = function(req, res){
             }
         })
 }
+
+module.exports.read_count_ongoing_cases = function(req, res){
+    Suspect 
+      .countDocuments({'crimes.status':{ $in: ["Pending","Ongoing"]}})
+      .exec(function(err, data){
+          if(err){
+              sendJSONresponse(res, 401, err)
+          }else{
+              sendJSONresponse(res, 200, {"ongoing cases count":data})
+          }
+      })
+}
+
+module.exports.read_count_concluded_cases = function(req, res){
+    Suspect 
+    .countDocuments({'crimes.status':{ $in: ["Closed","Dismissed","Transferred"]}})
+    .exec(function(err, data){
+        if(err){
+            sendJSONresponse(res, 401, err)
+        }else{
+            sendJSONresponse(res, 200, {"concluded cases count":data})
+        }
+    })
+}
+
+module.exports.group_cases_by_status = function(req, res){
+      Suspect
+         .aggregate([
+             {$unwind:'$crimes'},
+             {
+               $group: 
+               {
+                  _id: '$crimes.status',
+                  CountByStatus: {$count:{}}
+               }
+             },
+             {$sort:{'category':1}}
+         ]).exec(function(err, data){
+             if(err){
+                 sendJSONresponse(res, 401, err)
+             }else{
+                 sendJSONresponse(res, 200, data)
+             }
+         })
+}

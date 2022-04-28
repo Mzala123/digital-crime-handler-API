@@ -53,8 +53,16 @@ router.put('/update_crime_case_status_details/:suspectId/crimes/:crimeId', ctrlC
 
 router.get('/read_count_crime_by_category', ctrlCrime.read_count_crime_by_category)
 router.get('/count_all_registered_crimes', ctrlCrime.count_all_registered_crimes)
+
 router.get('/read_all_ongoing_cases', ctrlCrime.read_all_ongoing_cases)
 router.get('/read_all_concluded_cases', ctrlCrime.read_all_concluded_cases)
+
+//start of station officer dashboard APIs
+router.get('/read_count_ongoing_cases', ctrlCrime.read_count_ongoing_cases)
+router.get('/read_count_concluded_cases', ctrlCrime.read_count_concluded_cases)
+router.get('/group_cases_by_status', ctrlCrime.group_cases_by_status)
+
+// End of station officer dashboard APIs
 
 router.get('/read_count_all_suspects_in_system', ctrlPoliceOfficer.read_count_all_suspects_in_system)
 router.get('/read_count_suspects_by_gender', ctrlPoliceOfficer.read_count_suspects_by_gender)
