@@ -289,39 +289,41 @@ module.exports.read_all_concluded_cases = function(req, res){
 
 
 module.exports.read_count_concluded_cases = function(req, res){
-    Suspect 
-    .countDocuments({'crimes.status':{ $in:["Closed","Dismissed","Transferred"]}})
-    .exec(function(err, data){
+  
+    Suspect
+    .aggregate([
+        {$unwind:'$crimes'},
+        {$match:{'crimes.status':{$in:["Closed","Dismissed","Transferred"]}}},
+        {
+            $count:'count'
+        }
+       
+    ]).exec(function(err, data){
         if(err){
             sendJSONresponse(res, 401, err)
         }else{
-            sendJSONresponse(res, 200, data)
+            sendJSONresponse(res, 200, data[0])
         }
-    })
+    }) 
 }
 
 module.exports.read_count_ongoing_cases = function(req, res){
-    Suspect 
-      .countDocuments({'crimes.status':{ $in:["Pending","Ongoing"]}})
-      .exec(function(err, data){
-          if(err){
-              sendJSONresponse(res, 401, err)
-          }else{
-              sendJSONresponse(res, 200, data)
-          }
-      }) 
-
-     /* Suspect
+   
+      Suspect
         .aggregate([
-            {$unwind: '$crimes'},
-            {$match:{'$crimes.status':["Pending","Ongoing"]}},
+            {$unwind:'$crimes'},
+            {$match:{'crimes.status':{$in:["Pending","Ongoing"]}}},
+            {
+                $count:'count'
+            }
+           
         ]).exec(function(err, data){
             if(err){
                 sendJSONresponse(res, 401, err)
             }else{
-                sendJSONresponse(res, 200, data)
+                sendJSONresponse(res, 200, data[0])
             }
-        }) */
+        }) 
 }
 
 module.exports.group_cases_by_status = function(req, res){
