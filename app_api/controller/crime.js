@@ -80,7 +80,6 @@ module.exports.crimesReadOne = function(req, res){
     if(req.params && req.params.suspectId && req.params.crimeId){
         Suspect
            .findById(req.params.suspectId)
-         //  .select("name crimes")
            .exec(function(err, suspect){
                var response, crime;
                if(!suspect){
@@ -93,15 +92,6 @@ module.exports.crimesReadOne = function(req, res){
                    if(!crime){
                        sendJSONresponse(res, 404, {"message":"individual has no crime"})
                    }else{
-                     /*response = {
-                          /* suspect:{ 
-                               firstname: suspect.firstname,
-                               lastname: suspect.lastname,
-                               id: req.params.suspectId
-                           }, 
-                           crime: crime
-                       } */
-
                        sendJSONresponse(res, 200, crime)
                    }
                }else{
@@ -296,28 +286,42 @@ module.exports.read_all_concluded_cases = function(req, res){
         })
 }
 
-module.exports.read_count_ongoing_cases = function(req, res){
-    Suspect 
-      .countDocuments({'crimes.status':{ $in: ["Pending","Ongoing"]}})
-      .exec(function(err, data){
-          if(err){
-              sendJSONresponse(res, 401, err)
-          }else{
-              sendJSONresponse(res, 200, {"ongoing cases count":data})
-          }
-      })
-}
+
 
 module.exports.read_count_concluded_cases = function(req, res){
     Suspect 
-    .countDocuments({'crimes.status':{ $in: ["Closed","Dismissed","Transferred"]}})
+    .countDocuments({'crimes.status':{ $in:["Closed","Dismissed","Transferred"]}})
     .exec(function(err, data){
         if(err){
             sendJSONresponse(res, 401, err)
         }else{
-            sendJSONresponse(res, 200, {"concluded cases count":data})
+            sendJSONresponse(res, 200, data)
         }
     })
+}
+
+module.exports.read_count_ongoing_cases = function(req, res){
+    Suspect 
+      .countDocuments({'crimes.status':{ $in:["Pending","Ongoing"]}})
+      .exec(function(err, data){
+          if(err){
+              sendJSONresponse(res, 401, err)
+          }else{
+              sendJSONresponse(res, 200, data)
+          }
+      }) 
+
+     /* Suspect
+        .aggregate([
+            {$unwind: '$crimes'},
+            {$match:{'$crimes.status':["Pending","Ongoing"]}},
+        ]).exec(function(err, data){
+            if(err){
+                sendJSONresponse(res, 401, err)
+            }else{
+                sendJSONresponse(res, 200, data)
+            }
+        }) */
 }
 
 module.exports.group_cases_by_status = function(req, res){

@@ -63,12 +63,17 @@ module.exports.read_nofification_email_details = function(req, res){
        var suspectId = req.params.suspectId
        var crimeId = req.params.crimeId  
        suspectId === Suspect._id
-       console.log(suspectId);
+       console.log(crimeId);
        Suspect
          .aggregate(
              [
-                 {$match: { '_id': ObjectId(suspectId), 'crimes._id': ObjectId(crimeId)}},
                  {$unwind: "$crimes"},
+                 {
+                     $match:{
+                         "crimes._id": { $eq: ObjectId(crimeId)}
+                        }
+                  },
+                
                  {
                      $lookup: {
                         from: 'notifications',
@@ -80,10 +85,12 @@ module.exports.read_nofification_email_details = function(req, res){
              ]
          ).exec(function(err, data){
              if(err){
-
+                sendJSONresponse(res, 401, err)
              }else{
                  sendJSONresponse(res, 200, data[0])
              }
          })
+
+         
 }
 
