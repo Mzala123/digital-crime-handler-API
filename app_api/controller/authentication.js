@@ -80,7 +80,7 @@ module.exports.upload_user_imagefile = function(req, res){
 
 module.exports.get_list_of_users = function(req, res){
       User
-       .find({"userrole": {$ne:"Admin"}})
+       .find({"userrole": {$ne:"Admin"}}, {name:1, userrole:1, email:1})
        .exec(function(err, user){
            if(err){
              sendJSONresponse(res, 404, err)

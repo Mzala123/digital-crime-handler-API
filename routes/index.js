@@ -1,5 +1,17 @@
 var express = require('express');
 var router = express.Router();
+var multer = require("multer")
+
+var storage = multer.diskStorage({
+    destination: (req, file, cb) =>{
+        cb(null, "./public/images/")
+    },
+    filename: (req, file, cb) =>{
+        cb(null, file.filename)
+    }
+}) 
+
+var upload = multer({storage: storage})
 
 /* GET home page. */
 
@@ -62,6 +74,7 @@ router.get('/read_count_ongoing_cases', ctrlCrime.read_count_ongoing_cases)
 router.get('/read_count_concluded_cases', ctrlCrime.read_count_concluded_cases)
 router.get('/group_cases_by_status', ctrlCrime.group_cases_by_status)
 
+
 // End of station officer dashboard APIs
 
 router.get('/read_count_all_suspects_in_system', ctrlPoliceOfficer.read_count_all_suspects_in_system)
@@ -80,6 +93,10 @@ router.get('/read_nofification_email_details/:suspectId/crimes/:crimeId', ctrlMa
 // upload image to database API
 router.post('/upload_user_profile', ctrlImage.upload_user_profile)
 router.get('/get_user_profile_image/:imageId', ctrlImage.get_user_profile_image)
+
+// upload multiple files
+//router.post('/upload_case_files',upload.array('demo_files', 10), ctrlImage.upload_case_files)
+router.post('/upload_case_files', ctrlImage.upload_case_files)
 
 
 module.exports = router;

@@ -289,7 +289,6 @@ module.exports.read_all_concluded_cases = function(req, res){
 
 
 module.exports.read_count_concluded_cases = function(req, res){
-  
     Suspect
     .aggregate([
         {$unwind:'$crimes'},
@@ -308,7 +307,6 @@ module.exports.read_count_concluded_cases = function(req, res){
 }
 
 module.exports.read_count_ongoing_cases = function(req, res){
-   
       Suspect
         .aggregate([
             {$unwind:'$crimes'},

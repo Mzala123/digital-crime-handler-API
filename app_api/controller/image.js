@@ -61,3 +61,25 @@ module.exports.get_user_profile_image = async(req, res)=>{
               }
          })
 }
+
+module.exports.upload_case_files = function(req, res){
+    const reqFiles = []
+    for (var i = 0; i < req.files.length; i++) {
+        reqFiles.push(fs.writeFile("./public/images/"+req.files.file.name,
+        req.files.file.data))
+    }
+    
+            sendJSONresponse(res,201,req.files.file.name)
+      
+   
+
+    /*fs.writeFile("./public/images/"+req.files.file.name,
+    req.files.file.data, function(err){
+        if(err){
+            sendJSONresponse(res, 400, err)
+        }else{
+            sendJSONresponse(res,201,req.files.file.name)
+        }
+    })*/
+
+}
