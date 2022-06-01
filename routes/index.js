@@ -39,6 +39,7 @@ router.put('/update_user_password/:userid',ctrlAuth.update_user_password)
 
 router.delete('/delete_user/:userid',ctrlAuth.delete_user )
 router.post('/upload_user_imagefile', ctrlAuth.upload_user_imagefile)
+router.post('/upload_multiple_files', ctrlStationOfficer.upload_multiple_files);
 
 //user section dashboard queries
 router.get('/read_users_count_by_userrole', ctrlAuth.read_users_count_by_userrole)
