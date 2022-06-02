@@ -11,9 +11,6 @@ var sendJSONresponse = function(res, status, content){
     res.json(content)
 }
 
-module.exports.checking = function(req, res){
-    res.render('index', { title: 'Express' });
-} 
 
 module.exports.register_user = function(req, res){
     if(!req.body.name || !req.body.email || !req.body.userrole || !req.body.password){

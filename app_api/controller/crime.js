@@ -76,6 +76,7 @@ var addCrime = function(req, res, suspect){
     }
 }
 
+
 module.exports.crimesReadOne = function(req, res){
     if(req.params && req.params.suspectId && req.params.crimeId){
         Suspect

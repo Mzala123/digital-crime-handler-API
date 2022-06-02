@@ -41,6 +41,8 @@ router.delete('/delete_user/:userid',ctrlAuth.delete_user )
 router.post('/upload_user_imagefile', ctrlAuth.upload_user_imagefile)
 router.post('/upload_multiple_files', ctrlStationOfficer.upload_multiple_files);
 
+router.post('/add_person_suspect/:suspectId/add_attachment_names/:crimeId', ctrlStationOfficer.attachmentCreate);
+
 //user section dashboard queries
 router.get('/read_users_count_by_userrole', ctrlAuth.read_users_count_by_userrole)
 router.get('/read_count_all_users_in_system', ctrlAuth.read_count_all_users_in_system)

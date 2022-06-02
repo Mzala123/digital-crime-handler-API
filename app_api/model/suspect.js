@@ -10,15 +10,15 @@ var mongoose = require('mongoose')
 }) */
 
 var crimeSchema = new mongoose.Schema({
-     category: {type: String, required: true},
+     category: {type: String},
      chargeFiled: {type: String, "default": Date.now},
-     counts: {type: Number, requrired: true},
-     offenseDate: {type: Date, required: true},
-     offenseDescription: {type: String, required: true},
+     counts: {type: Number},
+     offenseDate: {type: Date},
+     offenseDescription: {type: String},
      attachments: [String],
      status: {type: String, 'default': 'Pending'},
      statusDescription: {type: String, 'default':'newly lodged case'},
-     registeringOfficer: {type: String, required: true}
+     registeringOfficer: {type: String}
 })
 
 var suspectSchema = new mongoose.Schema({
