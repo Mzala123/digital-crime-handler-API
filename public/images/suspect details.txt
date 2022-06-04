@@ -1,0 +1,70 @@
+<v-card>
+<v-row justify="center">
+ <div class=col-md-10>
+    <v-card-title>
+        SUSPECT DETAILS
+      </v-card-title>
+   <v-card class="d-flex align-center" elevation="1">
+          <div class="d-flex justify-space-between flex-wrap flex-md-nowrap flex-column flex-md-row">
+            <div class="mx-auto mt-2 my-2 ml-2">
+             <v-avatar
+                    rounded
+                    size="120"
+                    class="me-6"
+                    height="300"
+                    width="300"
+                >
+               <v-img :src="PhotoPath+suspect.profile_photo"></v-img> 
+            </v-avatar> 
+             <v-card-title class="black--text">
+                 {{ suspect.firstname }} {{ suspect.middlename }}  {{ suspect.lastname }} 
+              </v-card-title>
+            </div>
+            <v-divider :vertical="$vuetify.breakpoint.mdAndUp"></v-divider>
+            <div>
+               
+               <v-card-text class="black--text mt-2">
+                National ID: {{ suspect.nationalId }} 
+                </v-card-text>
+
+            <v-card-text class="black--text">
+                Gender: {{ suspect.gender}} 
+            </v-card-text>
+
+             <v-card-text class="black--text">
+                Age: {{ suspect.age}} 
+            </v-card-text>
+
+             <v-card-text class="black--text">
+                Date of birth: {{ suspect.dob}} 
+            </v-card-text>
+
+             <v-card-text class="black--text">
+                Home Address: {{ suspect.address}} 
+            </v-card-text>
+
+             <v-card-text class="black--text">
+                City of residence: {{ suspect.current_city}} 
+            </v-card-text>
+
+             <v-card-text class="black--text">
+                Home Address: {{ suspect.address}} 
+            </v-card-text>
+
+             <v-card-text class="black--text">
+                Suspect Home Address: {{ suspect.address}} 
+            </v-card-text>
+            
+             <v-card-text class="black--text">
+                Suspect Home Address: {{ suspect.address}} 
+            </v-card-text>
+              
+            
+            </div>
+          </div>
+          <v-divider> </v-divider>
+        </v-card>
+        <v-divider> </v-divider>
+   </div>
+   </v-row>
+</v-card> 

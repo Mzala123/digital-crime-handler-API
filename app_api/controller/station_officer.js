@@ -13,9 +13,11 @@ module.exports.upload_multiple_files = function(req, res){
   files = req.files.file; 
   var multipleFiles = []
      for(var count=0; count<files.length ; count++){  
+        console.log(files.length);
         var name = files[count].name;
         var data = files[count].data;
-        multipleFiles.push(name)
+        multipleFiles.push(files[count].name)
+        console.log(multipleFiles);
         fs.writeFile("./public/images/"+name,
         data, function(err){
             if(err){
@@ -25,7 +27,7 @@ module.exports.upload_multiple_files = function(req, res){
             }
         })   
      }
-     sendJSONresponse(res, 201, multipleFiles)      
+  sendJSONresponse(res, 201, multipleFiles)  
 }
 
 module.exports.attachmentCreate = function(req, res){
@@ -49,7 +51,7 @@ module.exports.attachmentCreate = function(req, res){
                   if(!thisCrime){
                       sendJSONresponse(res, 404, {"message":"crime id not found"})
                   }else{
-                   //thisCrime.attachments = req.body.attachments.split(",")
+                   //thisCrime.attachments = req.body.attachments
                    thisCrime.attachments.push(req.body.attachments)
                    suspect.save(function(err, suspect){
                        if(err){
