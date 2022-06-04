@@ -49,7 +49,7 @@ module.exports.attachmentCreate = function(req, res){
                   if(!thisCrime){
                       sendJSONresponse(res, 404, {"message":"crime id not found"})
                   }else{
-                   thisCrime.attachments = []
+                   //thisCrime.attachments = req.body.attachments.split(",")
                    thisCrime.attachments.push(req.body.attachments)
                    suspect.save(function(err, suspect){
                        if(err){
