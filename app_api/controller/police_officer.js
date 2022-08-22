@@ -8,7 +8,7 @@ var sendJSONresponse = function (res, status, content) {
 
 module.exports.add_person_suspect = function (req, res) {
     if (!req.body.nationalId || !req.body.firstname || !req.body.lastname
-        || !req.body.age || !req.body.gender || !req.body.dob) {
+        || !req.body.gender || !req.body.dob) {
         sendJSONresponse(res, 404, { "message": "Please fill in all required fields" })
         return
     }
@@ -16,7 +16,7 @@ module.exports.add_person_suspect = function (req, res) {
     suspect.nationalId = req.body.nationalId
     suspect.firstname = req.body.firstname
     suspect.lastname = req.body.lastname
-    suspect.age = req.body.age
+    //suspect.age = req.body.age
     suspect.gender = req.body.gender
     suspect.dob = req.body.dob
     suspect.middlename = req.body.middlename
@@ -43,7 +43,27 @@ module.exports.add_person_suspect = function (req, res) {
 
 module.exports.get_list_of_person_suspects = function (req, res) {
     Suspect
-        .find({})
+        .find({}, {
+            nationalId: 1,
+            firstname: 1,
+            lastname: 1,
+            age: { $dateDiff: { startDate: "$dob", endDate: "$$NOW", unit: "year" } },
+            gender:1,
+            dob: { $dateToString: { format: "%Y-%m-%d", date: "$dob" } },
+            middlename: 1,
+            profile_photo: 1,
+            city_origin: 1,
+            race: 1,
+            height: 1,
+            weight: 1,
+            eye_color: 1,
+            hair_color: 1,
+            current_city: 1,
+            address: 1,
+            skin_tone: 1,
+            known_aliases: 1,
+            crimes: 1,
+        })
         .exec(function (err, suspect) {
             if (err) {
                 sendJSONresponse(res, 404, err)
@@ -81,7 +101,7 @@ module.exports.read_one_person_suspect = function (req, res) {
                         nationalId: 1,
                         firstname: 1,
                         lastname: 1,
-                        age: 1,
+                        age: { $dateDiff: { startDate: "$dob", endDate: "$$NOW", unit: "year" } },
                         gender: 1,
                         dob: { $dateToString: { format: "%Y-%m-%d", date: "$dob" } },
                         middlename: 1,
@@ -96,9 +116,9 @@ module.exports.read_one_person_suspect = function (req, res) {
                         address: 1,
                         skin_tone: 1,
                         known_aliases: 1,
-                        crimes:1,
-                       // crimes: { $dateToString: { format: "%Y-%m-%d", date: "$crimes.offenseDate" } },
-                       // crimes.offenseDate
+                        crimes: 1,
+                        // crimes: { $dateToString: { format: "%Y-%m-%d", date: "$crimes.offenseDate" } },
+                        // crimes.offenseDate
                     }
                 }
 
@@ -112,38 +132,7 @@ module.exports.read_one_person_suspect = function (req, res) {
                 }
             })
     }
-    // else if (req.params && req.params.suspectId) {
-    //     Suspect
-    //         .findById(req.params.suspectId, {
-    //             nationalId: 1,
-    //             firstname: 1,
-    //             lastname: 1,
-    //             age: 1,
-    //             gender: 1,
-    //             //$dateToString: { format: "%Y-%m-%d", date: "$dob" } ,
-    //             middlename:1,
-    //             profile_photo:1,
-    //             city_origin:1,
-    //             race:1,
-    //             height:1,
-    //             weight:1,
-    //             eye_color:1,
-    //             hair_color:1,
-    //             current_city:1,
-    //             address:1,
-    //             skin_tone:1,
-    //             known_aliases:1
-    //         })
-    //         .exec(function (err, suspect) {
-    //             if (!suspect) {
-    //                 sendJSONresponse(res, 404, { "message": "suspect not found" })
-    //             } else if (err) {
-    //                 sendJSONresponse(res, 404, err)
-    //             } else {
-    //                 sendJSONresponse(res, 200, suspect)
-    //             }
-    //         })
-    // }
+
 
 }
 
@@ -163,7 +152,6 @@ module.exports.update_person_suspect = function (req, res) {
                 suspect.nationalId = req.body.nationalId
                 suspect.firstname = req.body.firstname
                 suspect.lastname = req.body.lastname
-                suspect.age = req.body.age
                 suspect.gender = req.body.gender
                 suspect.dob = req.body.dob
                 suspect.middlename = req.body.middlename
