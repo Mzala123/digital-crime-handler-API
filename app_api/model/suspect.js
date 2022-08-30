@@ -28,6 +28,7 @@ var suspectSchema = new mongoose.Schema({
      middlename: {type: String},
      age: {type:Number},
      profile_photo: {type:String, 'default': 'null_profile.png'}, 
+     national_photo:{type:String, 'default': 'null_profile.png'},
      city_origin: {type: String, 'default': 'N/A'},
      gender: {type: String, required: true},
      race: {type: String, 'default': 'N/A'},

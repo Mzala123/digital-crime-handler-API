@@ -21,6 +21,7 @@ module.exports.add_person_suspect = function (req, res) {
     suspect.dob = req.body.dob
     suspect.middlename = req.body.middlename
     suspect.profile_photo = req.body.profile_photo
+    suspect.national_photo = req.body.national_photo
     suspect.city_origin = req.body.city_origin
     suspect.race = req.body.race
     suspect.height = req.body.height
@@ -52,6 +53,7 @@ module.exports.get_list_of_person_suspects = function (req, res) {
             dob: { $dateToString: { format: "%Y-%m-%d", date: "$dob" } },
             middlename: 1,
             profile_photo: 1,
+            national_photo: 1,
             city_origin: 1,
             race: 1,
             height: 1,
@@ -106,6 +108,7 @@ module.exports.read_one_person_suspect = function (req, res) {
                         dob: { $dateToString: { format: "%Y-%m-%d", date: "$dob" } },
                         middlename: 1,
                         profile_photo: 1,
+                        national_photo: 1,
                         city_origin: 1,
                         race: 1,
                         height: 1,
@@ -156,6 +159,7 @@ module.exports.update_person_suspect = function (req, res) {
                 suspect.dob = req.body.dob
                 suspect.middlename = req.body.middlename
                 suspect.profile_photo = req.body.profile_photo
+                //suspect.national_photo = req.body.national_photo
                 suspect.city_origin = req.body.city_origin
                 suspect.race = req.body.race
                 suspect.height = req.body.height
@@ -225,5 +229,19 @@ module.exports.read_count_all_suspects_in_system = async function (req, res) {
         })
 
     //Suspect.createView()
+}
+
+module.exports.upload_national_id_photo = function(req, res){
+      //sendJSONresponse(res, 200, {"message":"ofcoz you did"});
+      fs.writeFile("./public/images/"+req.files.file.name,
+      req.files.file.data, function(err){
+          if(err){
+              sendJSONresponse(res, 400, err)
+              console.log(err)
+          }else{
+              console.log(req.files.file.name)
+              sendJSONresponse(res,201,req.files.file.name)
+          }
+      })
 }
 

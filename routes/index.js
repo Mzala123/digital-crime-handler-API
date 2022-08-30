@@ -48,6 +48,8 @@ router.get('/read_one_person_suspect/:suspectId', ctrlPoliceOfficer.read_one_per
 router.put('/update_person_suspect/:suspectId', ctrlPoliceOfficer.update_person_suspect)
 router.delete('/delete_person_suspect/:suspectId', ctrlPoliceOfficer.delete_person_suspect)
 
+router.post('/upload_national_id_photo', ctrlPoliceOfficer.upload_national_id_photo)
+
 // adding crime details committed by a suspect
 router.post('/add_person_suspect/:suspectId/add_crime_details', ctrlCrime.crimesCreate)
 router.get('/read_one_person_suspect/:suspectId/crimes/:crimeId', ctrlCrime.crimesReadOne)

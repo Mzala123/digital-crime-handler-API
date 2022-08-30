@@ -68,9 +68,9 @@ module.exports.upload_user_imagefile = function(req, res){
     req.files.file.data, function(err){
         if(err){
             sendJSONresponse(res, 400, err)
-            console.log(err)
+            //console.log(err)
         }else{
-            console.log(req.files.file.name)
+            //console.log(req.files.file.name)
             sendJSONresponse(res,201,req.files.file.name)
         }
     })
