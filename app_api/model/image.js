@@ -1,11 +1,9 @@
 var mongoose = require("mongoose")
 
 var imageSchema = mongoose.Schema({
-    imagename:{type : String, 'default':'null_profile.png'},
-    img:{
-        data: Buffer,
-        contentType: String
-    } 
+    name:{type : String},
+    avatar: {type: String},
+    cloudinary_id:{ type:String}
 })
 
 mongoose.model("Image", imageSchema)

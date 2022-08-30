@@ -1,20 +1,9 @@
 var express = require('express');
 var router = express.Router();
-var multer = require("multer")
-
-var storage = multer.diskStorage({
-    destination: (req, file, cb) =>{
-        cb(null, "./public/images/")
-    },
-    filename: (req, file, cb) =>{
-        cb(null, file.filename)
-    }
-}) 
-
-var upload = multer({storage: storage})
-
+const upload = require("../app_api/config/multer")
+const cloudinary = require("../app_api/config/cloudinary")
+const fs = require("fs")
 /* GET home page. */
-
 
 var ctrlAuth = require('../app_api/controller/authentication')
 var ctrlPoliceOfficer = require('../app_api/controller/police_officer')
@@ -97,9 +86,19 @@ router.get('/read_nofification_email_details/:suspectId/crimes/:crimeId', ctrlMa
 router.post('/upload_user_profile', ctrlImage.upload_user_profile)
 router.get('/get_user_profile_image/:imageId', ctrlImage.get_user_profile_image)
 
-// upload multiple files
-//router.post('/upload_case_files',upload.array('demo_files', 10), ctrlImage.upload_case_files)
 router.post('/upload_case_files', ctrlImage.upload_case_files)
+
+//router.post('/upload_image_to_cloudinary',upload.single('image'), ctrlImage.upload_image_to_cloudinary)
+
+// router.post("/upload_image_to_cloudinary", upload.single('image'), async(req, res) =>{
+//            try{
+//                 // console.log(req.file)
+//                 const result = cloudinary.uploader.upload(req.file.path)
+//                 res.json(result)
+//            }catch(err){
+//             console.log(err)
+//            }
+// })
 
 
 module.exports = router;

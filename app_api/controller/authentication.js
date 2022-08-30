@@ -1,7 +1,7 @@
 var passport = require('passport')
 var mongoose = require('mongoose')
 var User = mongoose.model('User')
-//var fileUpload = require('express-fileupload')
+var fileUpload = require('express-fileupload')
 var fs = require('fs') 
 const { use } = require('passport/lib')
 const { send } = require('process')
@@ -63,12 +63,14 @@ module.exports.login = function(req, res){
 }
 
 module.exports.upload_user_imagefile = function(req, res){
-    
+   // sendJSONresponse(res, 200, {"message":"ofcoz you did"});
     fs.writeFile("./public/images/"+req.files.file.name,
     req.files.file.data, function(err){
         if(err){
             sendJSONresponse(res, 400, err)
+            console.log(err)
         }else{
+            console.log(req.files.file.name)
             sendJSONresponse(res,201,req.files.file.name)
         }
     })

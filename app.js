@@ -32,8 +32,8 @@ app.use(cookieParser());
 app.use(fileUpload())
 app.use(express.static(path.join(__dirname, 'public')));
 
-/*app.use('/images',express.static(__dirname, 'images')) */
 app.use("/images", express.static(path.join(__dirname, 'images')));
+//app.use("/uploads", express.static(path.join(__dirname, 'uploads')));
 
 app.use(passport.initialize())
 app.use('/api', routerApi);
