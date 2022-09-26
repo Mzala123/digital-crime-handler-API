@@ -1,9 +1,11 @@
 var express = require('express');
 var router = express.Router();
-const upload = require("../app_api/config/multer")
-const cloudinary = require("../app_api/config/cloudinary")
-const fs = require("fs")
+
 /* GET home page. */
+
+//define service for multer
+
+const upload = require('../services/upload')
 
 var ctrlAuth = require('../app_api/controller/authentication')
 var ctrlPoliceOfficer = require('../app_api/controller/police_officer')
@@ -12,6 +14,7 @@ var ctrlCrime = require('../app_api/controller/crime')
 var ctrlImage = require('../app_api/controller/image')
 
 var ctrlMail = require('../app_api/controller/mailing');
+
 
 // registering users and login end points
 
@@ -90,17 +93,8 @@ router.get('/get_user_profile_image/:imageId', ctrlImage.get_user_profile_image)
 
 router.post('/upload_case_files', ctrlImage.upload_case_files)
 
-//router.post('/upload_image_to_cloudinary',upload.single('image'), ctrlImage.upload_image_to_cloudinary)
+router.post('/upload_image',upload.single("picture"), ctrlImage.uploadImage)
 
-// router.post("/upload_image_to_cloudinary", upload.single('image'), async(req, res) =>{
-//            try{
-//                 // console.log(req.file)
-//                 const result = cloudinary.uploader.upload(req.file.path)
-//                 res.json(result)
-//            }catch(err){
-//             console.log(err)
-//            }
-// })
 
 
 module.exports = router;

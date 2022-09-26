@@ -1,8 +1,7 @@
 var mongoose = require("mongoose")
 var Image = mongoose.model("Image")
 var fs = require('fs')
-const cloudinary = require("../config/cloudinary")
-const upload = require("../config/multer")
+
 
 var sendJSONresponse = function (res, status, content) {
     res.status(status)
@@ -10,15 +9,22 @@ var sendJSONresponse = function (res, status, content) {
 }
 
 
-module.exports.upload_image_to_cloudinary = (request, response, next)=>{
-    //   upload.single('image')(req, res, function(err){
-    //     if(err){
+module.exports.uploadImage = async function (req, res) {
+    try {
+        if (req.file && req.file.path) {
+            const image = new Image({
+                image_url : req.file.path
+            })
+            await image.save();
+            sendJSONresponse(res, 201, image.image_url)
+        } else {
+            console.log(req.file)
+            sendJSONresponse(res, 422, { error: "Invalid" })
+        }
+    }catch(error){
+        console.log(error)
+    }
 
-    //     }else{
-        
-    //     }
-    //   }) 
-      
 }
 
 module.exports.upload_user_profile = function (req, res) {

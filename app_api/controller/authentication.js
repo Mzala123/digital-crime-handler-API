@@ -3,8 +3,6 @@ var mongoose = require('mongoose')
 var User = mongoose.model('User')
 var fileUpload = require('express-fileupload')
 var fs = require('fs') 
-const { use } = require('passport/lib')
-const { send } = require('process')
 
 var sendJSONresponse = function(res, status, content){
     res.status(status)
