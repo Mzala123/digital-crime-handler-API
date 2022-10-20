@@ -94,6 +94,7 @@ router.get('/get_user_profile_image/:imageId', ctrlImage.get_user_profile_image)
 router.post('/upload_case_files', ctrlImage.upload_case_files)
 
 router.post('/upload_image',upload.single("picture"), ctrlImage.uploadImage)
+router.post('/upload_case_multiple_files', upload.array("pictures"), ctrlImage.upload_multiple_case_files)
 
 
 

@@ -16,7 +16,7 @@ module.exports.uploadImage = async function (req, res) {
                 image_url : req.file.path
             })
             await image.save();
-            sendJSONresponse(res, 201, image.image_url)
+            sendJSONresponse(res, 201, {image_url:image.image_url})
         } else {
             console.log(req.file)
             sendJSONresponse(res, 422, { error: "Invalid" })
@@ -77,4 +77,26 @@ module.exports.upload_case_files = function (req, res) {
 
     sendJSONresponse(res, 201, req.files.file.name)
 
+}
+
+module.exports.upload_multiple_case_files = function(req, res){
+    console.log("Mwafika muma multiple files")
+    //sendJSONresponse(res, 200, {message:"ke sharp"});
+      let filesMultiple = []
+      try{
+        if(req.file && req.file.path){
+             let urls = []
+             let multipleFiles = req.file
+             console.log(multipleFiles)
+             for(let file of multipleFiles){
+               filesMultiple.push(file)
+             }
+             sendJSONresponse(res, 201, filesMultiple)
+         }else{
+            console.log(req.file)
+            sendJSONresponse(res, 422, { error: "Invalid" })
+         }
+      }catch(error){
+        console.log(error);
+      }
 }
