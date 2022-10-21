@@ -82,21 +82,11 @@ module.exports.upload_case_files = function (req, res) {
 module.exports.upload_multiple_case_files = function(req, res){
     console.log("Mwafika muma multiple files")
     //sendJSONresponse(res, 200, {message:"ke sharp"});
-      let filesMultiple = []
-      try{
-        if(req.file && req.file.path){
-             let urls = []
-             let multipleFiles = req.file
-             console.log(multipleFiles)
-             for(let file of multipleFiles){
-               filesMultiple.push(file)
-             }
-             sendJSONresponse(res, 201, filesMultiple)
-         }else{
-            console.log(req.file)
-            sendJSONresponse(res, 422, { error: "Invalid" })
-         }
-      }catch(error){
-        console.log(error);
-      }
+    const urls = [];
+    const files = req.files;
+    for (const file of files) {
+      const { path } = file;
+      urls.push(path);
+    }
+    sendJSONresponse(res, 201, {case_files:urls})
 }
