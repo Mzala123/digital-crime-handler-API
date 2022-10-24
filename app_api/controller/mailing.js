@@ -73,6 +73,20 @@ module.exports.read_nofification_email_details = function(req, res){
                          "crimes._id": { $eq: ObjectId(crimeId)}
                         }
                   },
+                  {
+                    $project:{
+                        "crimes.category":1,
+                        "crimes.chargeFiled":{ $dateToString: { format: "%Y-%m-%d", date: "$crimes.chargeFiled" } },
+                        "crimes.counts":1,
+                        "crimes.offenseDate": { $dateToString: { format: "%Y-%m-%d", date: "$crimes.offenseDate" } },
+                        'crimes.offenseDescription':1,
+                        'crimes.attachments':1,
+                        'crimes.status':1,
+                        'crimes.statusDescription':1,
+                        'crimes.registeringOfficer':1,
+                    }
+                  
+                  },
                 
                  {
                      $lookup: {
