@@ -66,6 +66,8 @@ router.get('/count_all_registered_crimes', ctrlCrime.count_all_registered_crimes
 router.get('/read_all_ongoing_cases', ctrlCrime.read_all_ongoing_cases)
 router.get('/read_all_concluded_cases', ctrlCrime.read_all_concluded_cases)
 
+router.get('/read_pending_cases', ctrlCrime.read_all_pending_cases)
+
 //start of station officer dashboard APIs
 router.get('/read_count_ongoing_cases', ctrlCrime.read_count_ongoing_cases)
 router.get('/read_count_concluded_cases', ctrlCrime.read_count_concluded_cases)

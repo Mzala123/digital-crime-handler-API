@@ -9,8 +9,13 @@ var sendJSONresponse = function(res, status, content){
     res.json(content)
 }
 
+const RabbitMQ = require('../../services/rabbitmq')
+const publisher = async()=>{
+    const server = await RabbitMQ.publish()
+    return await server.createChannel()
+}
 
-module.exports.crimesCreate = function(req, res){
+module.exports.crimesCreate = async function(req, res){
      var suspectId = req.params.suspectId
     // getRegisteringOfficer(req, res, function(req, res, username){
          if(suspectId){
@@ -18,11 +23,13 @@ module.exports.crimesCreate = function(req, res){
                .findById(suspectId)
                .select('crimes')
                .exec(
-                   function(err, suspect){
+                  async function(err, suspect){
                        if(err){
                            sendJSONresponse(res, 404, err)
                        }else{
                            addCrime(req, res, suspect)
+                           const publish = await publisher()
+                           publish.sendToQueue('crime', Buffer.from(JSON.stringify(suspect)))
                        }
                    }
                )
@@ -30,6 +37,8 @@ module.exports.crimesCreate = function(req, res){
              sendJSONresponse(res, 404, {"message":"Not found suspect required"})
          }
     // })
+   
+
 }
 
 var getRegisteringOfficer = function(req, res, callback){
@@ -53,7 +62,7 @@ var getRegisteringOfficer = function(req, res, callback){
 } 
 
 
-var addCrime = function(req, res, suspect){
+var addCrime = async function(req, res, suspect){
     if(!suspect){
         sendJSONresponse(res, 404, {"message":"suspect not found"})
     }else{
@@ -307,6 +316,7 @@ module.exports.read_count_concluded_cases = function(req, res){
     }) 
 }
 
+
 module.exports.read_count_ongoing_cases = function(req, res){
       Suspect
         .aggregate([
@@ -324,6 +334,7 @@ module.exports.read_count_ongoing_cases = function(req, res){
             }
         }) 
 }
+
 
 module.exports.group_cases_by_status = function(req, res){
       Suspect
@@ -344,4 +355,26 @@ module.exports.group_cases_by_status = function(req, res){
                  sendJSONresponse(res, 200, data)
              }
          })
+}
+
+module.exports.read_all_pending_cases = function(req, res){
+    Suspect
+    .aggregate([
+        {$unwind:'$crimes'},
+        {$match:{'crimes.status':{$in:["Pending"]}}},
+        {
+            $project:{
+                crimes:1
+            }
+               
+        },
+        {$sort:{'crimes.chargeFiled':-1}}
+       
+    ]).exec(function(err, data){
+        if(err){
+            sendJSONresponse(res, 401, err)
+        }else{
+            sendJSONresponse(res, 200, data)
+        }
+    }) 
 }

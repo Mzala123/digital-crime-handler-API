@@ -29,21 +29,6 @@ module.exports.upload_multiple_files = function(req, res){
             })
         count = count + 1;  
      }
-    //  for(var count=0; count<files.length ; count++){  
-    //     console.log(files.length);
-    //     var name = files[count].name;
-    //     var data = files[count].data;
-    //     multipleFiles.push(files[count].name)
-    //     console.log(multipleFiles);
-    //     fs.writeFile("./public/images/"+name,
-    //     data, function(err){
-    //         if(err){
-    //             sendJSONresponse(res, 400, err)
-    //         }else{
-    //            console.log(multipleFiles);
-    //         }
-    //     })   
-    //  }
   sendJSONresponse(res, 201, multipleFiles)  
 }
 

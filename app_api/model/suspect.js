@@ -11,7 +11,7 @@ var mongoose = require('mongoose')
 
 var crimeSchema = new mongoose.Schema({
      category: {type: String},
-     chargeFiled: {type: String, "default": Date.now},
+     chargeFiled: {type: Date,trim:true, "default": Date.now},
      counts: {type: Number},
      offenseDate: {type: Date, trim:true},
      offenseDescription: {type: String},

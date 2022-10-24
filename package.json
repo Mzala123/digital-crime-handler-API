@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "@google-cloud/storage": "^5.18.2",
+    "amqplib": "^0.10.3",
     "cloudinary": "^1.30.1",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
@@ -25,6 +26,7 @@
     "nodemailer": "^6.7.3",
     "passport": "^0.5.2",
     "passport-local": "^1.0.0",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "socket.io": "^4.5.3"
   }
 }
